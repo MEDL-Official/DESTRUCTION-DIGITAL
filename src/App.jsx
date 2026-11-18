@@ -256,6 +256,40 @@ function App() {
 
   const content = translations[language]
 
+  useEffect(() => {
+    const seo = {
+      EN: {
+        title: 'DESTRUCTION DIGITAL — Web Design & Website Development',
+        description:
+          'Independent digital studio specializing in website design, website development, redesign, SEO optimization and digital solutions.',
+        locale: 'en_US',
+      },
+      RU: {
+        title: 'DESTRUCTION DIGITAL — Веб-студия и разработка сайтов',
+        description:
+          'Независимая веб-студия DESTRUCTION DIGITAL. Разработка сайтов, веб-дизайн, редизайн, SEO-оптимизация и техническая поддержка.',
+        locale: 'ru_RU',
+      },
+    }
+
+    const data = seo[language]
+
+    document.title = data.title
+    document.documentElement.lang = language.toLowerCase()
+
+    const updateMeta = (selector, value, attribute = 'content') => {
+      const element = document.querySelector(selector)
+      if (element) element.setAttribute(attribute, value)
+    }
+
+    updateMeta('meta[name="description"]', data.description)
+    updateMeta('meta[property="og:title"]', data.title)
+    updateMeta('meta[property="og:description"]', data.description)
+    updateMeta('meta[property="og:locale"]', data.locale)
+    updateMeta('meta[name="twitter:title"]', data.title)
+    updateMeta('meta[name="twitter:description"]', data.description)
+  }, [language])
+
   const activeService = content.services.find(
     (service) => service.number === activeServiceNumber
   )
